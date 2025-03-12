@@ -6,6 +6,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)
 ![Status](https://img.shields.io/badge/状态-开发中-yellow)
 
+**[在线体验 Demo](https://maimbot-webui.baka.studio/)**
+
 </div>
 
 ## 📝 项目简介
@@ -13,6 +15,8 @@
 **MaiMBot-WebUI 是一个用于配置、监控和管理麦麦(MaiMBot)的网页界面工具**
 
 MaiMBot是一个基于大语言模型的智能QQ群聊机器人，而本项目为其提供了便捷的管理界面。
+
+👉 **MaiMBot项目地址：[https://github.com/SengokuCola/MaiMBot](https://github.com/SengokuCola/MaiMBot)**
 
 - 基于 Vue 3 + TypeScript 构建
 - Element Plus UI 框架提供丰富组件
