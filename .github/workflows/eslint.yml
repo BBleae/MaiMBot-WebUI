@@ -30,14 +30,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install ESLint
+      - name: Install Modules
         run: |
-          npm install eslint@^9.22.0
+          pnpm i
 
       - name: Run ESLint
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
-        run: npx eslint@^9.22.0 . --output-file eslint-results.sarif
+        run: pnpm lint --output-file eslint-results.sarif
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
