@@ -1,303 +1,370 @@
-# MaiMBot RESTful API ÎÄµµ£¨²İ°¸£©
+# MaiMBot RESTful API æ–‡æ¡£
 
-  ## »ù´¡ĞÅÏ¢
-  - »ù´¡URL: `/api/v1`
-  - ËùÓĞÏìÓ¦¾ùÎªJSON¸ñÊ½
-  - ÈÏÖ¤·½Ê½: Bearer Token
+## åŸºç¡€ä¿¡æ¯
 
-  ## ÈÏÖ¤
+- **åŸºç¡€URL**: `/api/v1`
+- **å“åº”æ ¼å¼**: JSON
+- **è®¤è¯æ–¹å¼**: Bearer Token
 
-  ### »ñÈ¡ÈÏÖ¤ÁîÅÆ
-  - ·½·¨: POST
-  - Â·¾¶: `/auth/token`
-  - ÇëÇóÌå:
-    ```json
+## è®¤è¯ API
+
+### è·å–è®¤è¯ä»¤ç‰Œ
+
+```http
+POST /api/v1/auth/token
+```
+
+**è¯·æ±‚ä½“**:
+```json
+{
+  "username": "admin",
+  "password": "password"
+}
+```
+
+**å“åº”**:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "expires_at": "2025-04-14T10:00:00Z"
+}
+```
+
+## èŠå¤©è®°å½• API
+
+### è·å–èŠå¤©è®°å½•åˆ—è¡¨
+
+```http
+GET /api/v1/chats
+```
+
+**æŸ¥è¯¢å‚æ•°**:
+
+| å‚æ•° | ç±»å‹ | è¯´æ˜ | é»˜è®¤å€¼ |
+|------|------|------|--------|
+| page | æ•´æ•° | é¡µç  | 1 |
+| limit | æ•´æ•° | æ¯é¡µæ¡æ•° | 20 |
+| group | å­—ç¬¦ä¸² | ç¾¤ç»„IDæˆ–åç§° | - |
+| sender | å­—ç¬¦ä¸² | å‘é€è€…IDæˆ–åç§° | - |
+| startDate | å­—ç¬¦ä¸² | èµ·å§‹æ—¥æœŸ (ISO 8601æ ¼å¼) | - |
+| endDate | å­—ç¬¦ä¸² | ç»“æŸæ—¥æœŸ (ISO 8601æ ¼å¼) | - |
+| query | å­—ç¬¦ä¸² | æœç´¢å…³é”®è¯ | - |
+
+**å“åº”**:
+```json
+{
+  "data": [
     {
-      "username": "admin",
-      "password": "password"
-    }
-  - ÏìÓ¦:
-  {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "expires_at": "2025-04-14T10:00:00Z"
-  }
-
-  ÁÄÌì¼ÇÂ¼API
-
-  »ñÈ¡ÁÄÌì¼ÇÂ¼ÁĞ±í
-
-  - ·½·¨: GET
-  - Â·¾¶: /chats
-  - ²éÑ¯²ÎÊı:
-    - page: Ò³Âë (Ä¬ÈÏ: 1)
-    - limit: Ã¿Ò³ÌõÊı (Ä¬ÈÏ: 20)
-    - group: Èº×éID»òÃû³Æ (¿ÉÑ¡)
-    - sender: ·¢ËÍÕßID»òÃû³Æ (¿ÉÑ¡)
-    - startDate: ÆğÊ¼ÈÕÆÚ (ISO 8601¸ñÊ½, ¿ÉÑ¡)
-    - endDate: ½áÊøÈÕÆÚ (ISO 8601¸ñÊ½, ¿ÉÑ¡)
-    - query: ËÑË÷¹Ø¼ü´Ê (¿ÉÑ¡)
-  - ÏìÓ¦:
-  {
-    "data": [
-      {
-        "id": "1",
-        "timestamp": "2023-03-12T10:23:45Z",
-        "group": {
-          "id": "12345",
-          "name": "ÂóÂó·ÛË¿Èº"
-        },
-        "sender": {
-          "id": "67890",
-          "name": "Ğ¡Ã÷",
-          "avatar": "https://example.com/avatar/67890.jpg"
-        },
-        "content": "ÂóÂó£¬½ñÌìÌìÆøÔõÃ´Ñù£¿",
-        "isBot": false
-      },
-      ...
-    ],
-    "pagination": {
-      "total": 42,
-      "page": 1,
-      "limit": 20,
-      "pages": 3
-    }
-  }
-
-  µ¼³öÁÄÌì¼ÇÂ¼
-
-  - ·½·¨: GET
-  - Â·¾¶: /chats/export
-  - ²éÑ¯²ÎÊı: (Óë»ñÈ¡ÁÄÌì¼ÇÂ¼ÏàÍ¬)
-  - ÏìÓ¦: ÎÄ¼şÏÂÔØ
-
-  »ñÈ¡Èº×éÁĞ±í
-
-  - ·½·¨: GET
-  - Â·¾¶: /groups
-  - ÏìÓ¦:
-  {
-    "data": [
-      {
+      "id": "1",
+      "timestamp": "2023-03-12T10:23:45Z",
+      "group": {
         "id": "12345",
-        "name": "ÂóÂó·ÛË¿Èº",
-        "memberCount": 120
+        "name": "éº¦éº¦ç²‰ä¸ç¾¤"
       },
-      ...
-    ]
-  }
-
-  ±íÇé°üAPI
-
-  »ñÈ¡±íÇé°üÁĞ±í
-
-  - ·½·¨: GET
-  - Â·¾¶: /emojis
-  - ²éÑ¯²ÎÊı:
-    - page: Ò³Âë (Ä¬ÈÏ: 1)
-    - limit: Ã¿Ò³ÌõÊı (Ä¬ÈÏ: 20)
-    - emotion: ÇéĞ÷·ÖÀà (¿ÉÑ¡)
-    - query: ËÑË÷¹Ø¼ü´Ê (¿ÉÑ¡)
-    - sort: ÅÅĞò×Ö¶Î (name|useCount, Ä¬ÈÏ: useCount)
-    - order: ÅÅĞò·½Ïò (asc|desc, Ä¬ÈÏ: desc)
-  - ÏìÓ¦:
-  {
-    "data": [
-      {
-        "id": "1",
-        "name": "happy_1.png",
-        "emotion": "¿ìÀÖ",
-        "url": "https://example.com/emojis/happy_1.png",
-        "useCount": 42,
-        "createdAt": "2023-01-15T08:30:00Z"
+      "sender": {
+        "id": "67890",
+        "name": "å°æ˜",
+        "avatar": "https://example.com/avatar/67890.jpg"
       },
-      ...
-    ],
-    "pagination": {
-      "total": 67,
-      "page": 1,
-      "limit": 20,
-      "pages": 4
+      "content": "éº¦éº¦ï¼Œä»Šå¤©å¤©æ°”æ€ä¹ˆæ ·ï¼Ÿ",
+      "isBot": false
     }
+  ],
+  "pagination": {
+    "total": 42,
+    "page": 1,
+    "limit": 20,
+    "pages": 3
   }
+}
+```
 
-  »ñÈ¡ÇéĞ÷·ÖÀàÁĞ±í
+### å¯¼å‡ºèŠå¤©è®°å½•
 
-  - ·½·¨: GET
-  - Â·¾¶: /emojis/emotions
-  - ÏìÓ¦:
-  {
-    "data": ["¿ìÀÖ", "±¯ÉË", "ÉúÆø", "¾ªÑÈ", "ÎŞÓï", "º¦Ğß", "Ë¼¿¼", "À§»ó", "µÃÒâ"]
-  }
+```http
+GET /api/v1/chats/export
+```
 
-  ÉÏ´«±íÇé°ü
+**æŸ¥è¯¢å‚æ•°**: ä¸è·å–èŠå¤©è®°å½•ç›¸åŒ
 
-  - ·½·¨: POST
-  - Â·¾¶: /emojis
-  - ÄÚÈİÀàĞÍ: multipart/form-data
-  - ÇëÇó²ÎÊı:
-    - file: ±íÇé°üÎÄ¼ş (±ØĞè)
-    - emotion: ÇéĞ÷·ÖÀà (±ØĞè)
-  - ÏìÓ¦:
-  {
-    "id": "13",
-    "name": "uploaded_happy.png",
-    "emotion": "¿ìÀÖ",
-    "url": "https://example.com/emojis/uploaded_happy.png",
-    "useCount": 0,
-    "createdAt": "2025-03-14T12:30:00Z"
-  }
+**å“åº”**: æ–‡ä»¶ä¸‹è½½
 
-  ÅúÁ¿ÉÏ´«±íÇé°ü
+### è·å–ç¾¤ç»„åˆ—è¡¨
 
-  - ·½·¨: POST
-  - Â·¾¶: /emojis/batch
-  - ÄÚÈİÀàĞÍ: multipart/form-data
-  - ÇëÇó²ÎÊı:
-    - files[]: ±íÇé°üÎÄ¼şÁĞ±í (±ØĞè)
-    - defaultEmotion: Ä¬ÈÏÇéĞ÷·ÖÀà (¿ÉÑ¡)
-  - ÏìÓ¦:
-  {
-    "success": 5,
-    "failed": 1,
-    "data": [
-      {
-        "id": "14",
-        "name": "batch_1.png",
-        "emotion": "¿ìÀÖ",
-        "url": "https://example.com/emojis/batch_1.png",
-        "useCount": 0,
-        "createdAt": "2025-03-14T12:35:00Z"
-      },
-      ...
-    ],
-    "errors": [
-      {
-        "filename": "invalid.doc",
-        "error": "²»Ö§³ÖµÄÎÄ¼şÀàĞÍ"
-      }
-    ]
-  }
+```http
+GET /api/v1/groups
+```
 
-  É¾³ı±íÇé°ü
-
-  - ·½·¨: DELETE
-  - Â·¾¶: /emojis/{id}
-  - ÏìÓ¦:
-  {
-    "success": true
-  }
-
-  ÏµÍ³×´Ì¬API
-
-  »ñÈ¡ÏµÍ³×´Ì¬
-
-  - ·½·¨: GET
-  - Â·¾¶: /system/status
-  - ÏìÓ¦:
-  {
-    "version": "1.2.0",
-    "uptime": 345600,
-    "memory": {
-      "total": 8192,
-      "used": 4096,
-      "free": 4096
-    },
-    "storage": {
-      "total": 102400,
-      "used": 51200,
-      "free": 51200
-    },
-    "connectedGroups": 15,
-    "activeUsers": 120,
-    "messagesProcessed": 5678
-  }
-
-  »ñÈ¡ÏµÍ³ÈÕÖ¾
-
-  - ·½·¨: GET
-  - Â·¾¶: /system/logs
-  - ²éÑ¯²ÎÊı:
-    - level: ÈÕÖ¾¼¶±ğ (info|warning|error|all, Ä¬ÈÏ: all)
-    - startDate: ÆğÊ¼ÈÕÆÚ (ISO 8601¸ñÊ½, ¿ÉÑ¡)
-    - endDate: ½áÊøÈÕÆÚ (ISO 8601¸ñÊ½, ¿ÉÑ¡)
-    - limit: ÌõÊıÏŞÖÆ (Ä¬ÈÏ: 100)
-  - ÏìÓ¦:
-  {
-    "data": [
-      {
-        "timestamp": "2025-03-14T10:15:30Z",
-        "level": "info",
-        "source": "bot",
-        "message": "Bot started successfully"
-      },
-      {
-        "timestamp": "2025-03-14T10:15:35Z",
-        "level": "warning",
-        "source": "connection",
-        "message": "Reconnecting to group 12345"
-      },
-      ...
-    ]
-  }
-
-  »úÆ÷ÈËÅäÖÃAPI
-
-  »ñÈ¡»úÆ÷ÈËÅäÖÃ
-
-  - ·½·¨: GET
-  - Â·¾¶: /bot/config
-  - ÏìÓ¦:
-  {
-    "name": "ÂóÂó",
-    "model": "gpt-4",
-    "temperature": 0.7,
-    "maxTokens": 2048,
-    "responseDelay": 1000,
-    "autoReply": true,
-    "replyRate": 0.8,
-    "blacklistedWords": ["Ãô¸Ğ´Ê1", "Ãô¸Ğ´Ê2"],
-    "blacklistedUsers": ["123456", "789012"]
-  }
-
-  ¸üĞÂ»úÆ÷ÈËÅäÖÃ
-
-  - ·½·¨: PATCH
-  - Â·¾¶: /bot/config
-  - ÇëÇóÌå:
-  {
-    "name": "ÂóÂó2.0",
-    "temperature": 0.8,
-    "replyRate": 0.9
-  }
-  - ÏìÓ¦:
-  {
-    "success": true,
-    "message": "ÅäÖÃ¸üĞÂ³É¹¦"
-  }
-
-  ´íÎóÏìÓ¦
-
-  ËùÓĞAPI´íÎó½«·µ»ØÊÊµ±µÄHTTP×´Ì¬ÂëºÍÒ»¸ö°üº¬´íÎóÏêÇéµÄJSON¶ÔÏó:
-
-  {
-    "error": {
-      "code": "INVALID_CREDENTIALS",
-      "message": "ÓÃ»§Ãû»òÃÜÂë²»ÕıÈ·",
-      "details": "..."
+**å“åº”**:
+```json
+{
+  "data": [
+    {
+      "id": "12345",
+      "name": "éº¦éº¦ç²‰ä¸ç¾¤",
+      "memberCount": 120
     }
+  ]
+}
+```
+
+## è¡¨æƒ…åŒ… API
+
+### è·å–è¡¨æƒ…åŒ…åˆ—è¡¨
+
+```http
+GET /api/v1/emojis
+```
+
+**æŸ¥è¯¢å‚æ•°**:
+
+| å‚æ•° | ç±»å‹ | è¯´æ˜ | é»˜è®¤å€¼ |
+|------|------|------|--------|
+| page | æ•´æ•° | é¡µç  | 1 |
+| limit | æ•´æ•° | æ¯é¡µæ¡æ•° | 20 |
+| emotion | å­—ç¬¦ä¸² | æƒ…ç»ªåˆ†ç±» | - |
+| query | å­—ç¬¦ä¸² | æœç´¢å…³é”®è¯ | - |
+| sort | å­—ç¬¦ä¸² | æ’åºå­—æ®µ (name\|useCount) | useCount |
+| order | å­—ç¬¦ä¸² | æ’åºæ–¹å‘ (asc\|desc) | desc |
+
+**å“åº”**:
+```json
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "happy_1.png",
+      "emotion": "å¿«ä¹",
+      "url": "https://example.com/emojis/happy_1.png",
+      "useCount": 42,
+      "createdAt": "2023-01-15T08:30:00Z"
+    }
+  ],
+  "pagination": {
+    "total": 67,
+    "page": 1,
+    "limit": 20,
+    "pages": 4
   }
+}
+```
 
-  ×¢ÒâÊÂÏî
+### è·å–æƒ…ç»ªåˆ†ç±»åˆ—è¡¨
 
-  1. ËùÓĞÇëÇóĞè°üº¬ÓĞĞ§µÄÈÏÖ¤ÁîÅÆ
-  2. ÎÄ¼şÉÏ´«´óĞ¡ÏŞÖÆ: µ¥¸öÎÄ¼ş2MB£¬ÅúÁ¿ÉÏ´«×Ü¼Æ10MB
-  3. APIËÙÂÊÏŞÖÆ: Ã¿·ÖÖÓ100ÇëÇó
+```http
+GET /api/v1/emojis/emotions
+```
 
-  ÕâÌ×APIÉè¼Æº­¸ÇÁËWebUIĞèÒªµÄËùÓĞ¹¦ÄÜµã£¬°üÀ¨£º
-  1. ÁÄÌì¼ÇÂ¼¹ÜÀí£¨²éÑ¯¡¢¹ıÂË¡¢µ¼³ö£©
-  2. ±íÇé°ü¹ÜÀí£¨ÉÏ´«¡¢ÅúÁ¿µ¼Èë¡¢·ÖÀà¡¢É¾³ı£©
-  3. ÏµÍ³×´Ì¬¼à¿Ø
-  4. »úÆ÷ÈËÅäÖÃ¹ÜÀí
+**å“åº”**:
+```json
+{
+  "data": ["å¿«ä¹", "æ‚²ä¼¤", "ç”Ÿæ°”", "æƒŠè®¶", "æ— è¯­", "å®³ç¾", "æ€è€ƒ", "å›°æƒ‘", "å¾—æ„"]
+}
+```
 
-  API×ñÑ­RESTful·ç¸ñ£¬Ê¹ÓÃ±ê×¼HTTP·½·¨ºÍ×´Ì¬Âë£¬¾ßÓĞÇåÎúµÄ×ÊÔ´²ã´Î½á¹¹ºÍÒ»ÖÂµÄÏìÓ¦¸ñÊ½¡£
+### ä¸Šä¼ è¡¨æƒ…åŒ…
+
+```http
+POST /api/v1/emojis
+Content-Type: multipart/form-data
+```
+
+**è¯·æ±‚å‚æ•°**:
+
+| å‚æ•° | ç±»å‹ | è¯´æ˜ | å¿…å¡« |
+|------|------|------|------|
+| file | æ–‡ä»¶ | è¡¨æƒ…åŒ…æ–‡ä»¶ | æ˜¯ |
+| emotion | å­—ç¬¦ä¸² | æƒ…ç»ªåˆ†ç±» | æ˜¯ |
+
+**å“åº”**:
+```json
+{
+  "id": "13",
+  "name": "uploaded_happy.png",
+  "emotion": "å¿«ä¹",
+  "url": "https://example.com/emojis/uploaded_happy.png",
+  "useCount": 0,
+  "createdAt": "2025-03-14T12:30:00Z"
+}
+```
+
+### æ‰¹é‡ä¸Šä¼ è¡¨æƒ…åŒ…
+
+```http
+POST /api/v1/emojis/batch
+Content-Type: multipart/form-data
+```
+
+**è¯·æ±‚å‚æ•°**:
+
+| å‚æ•° | ç±»å‹ | è¯´æ˜ | å¿…å¡« |
+|------|------|------|------|
+| files[] | æ–‡ä»¶æ•°ç»„ | è¡¨æƒ…åŒ…æ–‡ä»¶åˆ—è¡¨ | æ˜¯ |
+| defaultEmotion | å­—ç¬¦ä¸² | é»˜è®¤æƒ…ç»ªåˆ†ç±» | å¦ |
+
+**å“åº”**:
+```json
+{
+  "success": 5,
+  "failed": 1,
+  "data": [
+    {
+      "id": "14",
+      "name": "batch_1.png",
+      "emotion": "å¿«ä¹",
+      "url": "https://example.com/emojis/batch_1.png",
+      "useCount": 0,
+      "createdAt": "2025-03-14T12:35:00Z"
+    }
+  ],
+  "errors": [
+    {
+      "filename": "invalid.doc",
+      "error": "ä¸æ”¯æŒçš„æ–‡ä»¶ç±»å‹"
+    }
+  ]
+}
+```
+
+### åˆ é™¤è¡¨æƒ…åŒ…
+
+```http
+DELETE /api/v1/emojis/{id}
+```
+
+**å“åº”**:
+```json
+{
+  "success": true
+}
+```
+
+## ç³»ç»ŸçŠ¶æ€ API
+
+### è·å–ç³»ç»ŸçŠ¶æ€
+
+```http
+GET /api/v1/system/status
+```
+
+**å“åº”**:
+```json
+{
+  "version": "1.2.0",
+  "uptime": 345600,
+  "memory": {
+    "total": 8192,
+    "used": 4096,
+    "free": 4096
+  },
+  "storage": {
+    "total": 102400,
+    "used": 51200,
+    "free": 51200
+  },
+  "connectedGroups": 15,
+  "activeUsers": 120,
+  "messagesProcessed": 5678
+}
+```
+
+### è·å–ç³»ç»Ÿæ—¥å¿—
+
+```http
+GET /api/v1/system/logs
+```
+
+**æŸ¥è¯¢å‚æ•°**:
+
+| å‚æ•° | ç±»å‹ | è¯´æ˜ | é»˜è®¤å€¼ |
+|------|------|------|--------|
+| level | å­—ç¬¦ä¸² | æ—¥å¿—çº§åˆ« (info\|warning\|error\|all) | all |
+| startDate | å­—ç¬¦ä¸² | èµ·å§‹æ—¥æœŸ (ISO 8601æ ¼å¼) | - |
+| endDate | å­—ç¬¦ä¸² | ç»“æŸæ—¥æœŸ (ISO 8601æ ¼å¼) | - |
+| limit | æ•´æ•° | æ¡æ•°é™åˆ¶ | 100 |
+
+**å“åº”**:
+```json
+{
+  "data": [
+    {
+      "timestamp": "2025-03-14T10:15:30Z",
+      "level": "info",
+      "source": "bot",
+      "message": "Bot started successfully"
+    },
+    {
+      "timestamp": "2025-03-14T10:15:35Z",
+      "level": "warning",
+      "source": "connection",
+      "message": "Reconnecting to group 12345"
+    }
+  ]
+}
+```
+
+## æœºå™¨äººé…ç½® API
+
+### è·å–æœºå™¨äººé…ç½®
+
+```http
+GET /api/v1/bot/config
+```
+
+**å“åº”**:
+```json
+{
+  "name": "éº¦éº¦",
+  "model": "gpt-4",
+  "temperature": 0.7,
+  "maxTokens": 2048,
+  "responseDelay": 1000,
+  "autoReply": true,
+  "replyRate": 0.8,
+  "blacklistedWords": ["æ•æ„Ÿè¯1", "æ•æ„Ÿè¯2"],
+  "blacklistedUsers": ["123456", "789012"]
+}
+```
+
+### æ›´æ–°æœºå™¨äººé…ç½®
+
+```http
+PATCH /api/v1/bot/config
+```
+
+**è¯·æ±‚ä½“**:
+```json
+{
+  "name": "éº¦éº¦2.0",
+  "temperature": 0.8,
+  "replyRate": 0.9
+}
+```
+
+**å“åº”**:
+```json
+{
+  "success": true,
+  "message": "é…ç½®æ›´æ–°æˆåŠŸ"
+}
+```
+
+## é”™è¯¯å“åº”
+
+æ‰€æœ‰APIé”™è¯¯å°†è¿”å›é€‚å½“çš„HTTPçŠ¶æ€ç å’Œä¸€ä¸ªåŒ…å«é”™è¯¯è¯¦æƒ…çš„JSONå¯¹è±¡:
+
+```json
+{
+  "error": {
+    "code": "INVALID_CREDENTIALS",
+    "message": "ç”¨æˆ·åæˆ–å¯†ç ä¸æ­£ç¡®",
+    "details": "..."
+  }
+}
+```
+
+## æ³¨æ„äº‹é¡¹
+
+1. æ‰€æœ‰è¯·æ±‚éœ€åŒ…å«æœ‰æ•ˆçš„è®¤è¯ä»¤ç‰Œ
+2. æ–‡ä»¶ä¸Šä¼ å¤§å°é™åˆ¶: å•ä¸ªæ–‡ä»¶2MBï¼Œæ‰¹é‡ä¸Šä¼ æ€»è®¡10MB
+3. APIé€Ÿç‡é™åˆ¶: æ¯åˆ†é’Ÿ100è¯·æ±‚
