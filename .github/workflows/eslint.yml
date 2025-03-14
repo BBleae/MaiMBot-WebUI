@@ -32,12 +32,12 @@ jobs:
 
       - name: Install Modules
         run: |
-          pnpm i
+          npx pnpm@latest i
 
       - name: Run ESLint
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
-        run: pnpm lint --output-file eslint-results.sarif
+        run: npx pnpm@latest lint --output-file eslint-results.sarif
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
